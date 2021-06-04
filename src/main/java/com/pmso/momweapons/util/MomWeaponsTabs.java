@@ -10,7 +10,7 @@ import net.minecraft.util.NonNullList;
 
 public class MomWeaponsTabs extends ItemGroup{
 
-	public TugaFlavoursTabs() {
+	public MomWeaponsTabs() {
 		super("momWeaponsTab");
 	}
 
