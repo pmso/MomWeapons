@@ -6,12 +6,19 @@ import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.ImmutableMultimap.Builder;
 import com.google.common.collect.Multimap;
 
+import net.minecraft.client.renderer.entity.model.BipedModel;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.IArmorMaterial;
+import net.minecraft.item.ItemStack;
+import net.minecraft.util.LazyValue;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.DistExecutor;
 
 public class WearableWeapon extends ArmorItem {
 	
@@ -19,10 +26,15 @@ public class WearableWeapon extends ArmorItem {
 	   private final float attackDamage;
 	   
 	   private final Multimap<Attribute, AttributeModifier> toolAttributes;
-	
-	public WearableWeapon(IArmorMaterial materialIn,int attackDamageIn, float attackSpeedIn, EquipmentSlotType slot, Properties builderIn) {
-		super(materialIn, slot, builderIn);
 
+		private final LazyValue<BipedModel<?>> model;
+		private final boolean oneFoot;
+	
+	public WearableWeapon(IArmorMaterial materialIn,int attackDamageIn, float attackSpeedIn, EquipmentSlotType slot, Properties builderIn,boolean oneFoot) {
+		super(materialIn, slot, builderIn);
+		this.oneFoot=oneFoot;
+		this.model = DistExecutor.unsafeRunForDist(() -> () -> new LazyValue<>(() -> this.provideArmorModelForSlot(slot)),
+				() -> () -> null);
 		this.attackDamage = attackDamageIn;
 		Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
 	      builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(ATTACK_DAMAGE_MODIFIER, "Tool modifier", (double)this.attackDamage, AttributeModifier.Operation.ADDITION));
@@ -33,5 +45,19 @@ public class WearableWeapon extends ArmorItem {
 	@Override
 	public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType equipmentSlot) {
 		 return equipmentSlot == EquipmentSlotType.MAINHAND ? this.toolAttributes : super.getAttributeModifiers(equipmentSlot);
+	}
+	
+	@Override
+	@OnlyIn(Dist.CLIENT)
+	@SuppressWarnings("unchecked")
+	public <A extends BipedModel<?>> A getArmorModel(LivingEntity entityLiving, ItemStack itemStack,
+			EquipmentSlotType armorSlot, A _default) {
+		return (A) model.getValue();
+	}
+	
+
+	@OnlyIn(Dist.CLIENT)
+	public BipedModel<?> provideArmorModelForSlot(EquipmentSlotType slot) {
+		return new ModelArmorSlipper(slot,oneFoot);
 	}
 }

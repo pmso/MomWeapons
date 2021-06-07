@@ -7,14 +7,29 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.items.Items;
+import net.minecraft.item.Items;
 
 import com.pmso.momweapons.MomWeapons;
 
 public enum ModArmorMaterial implements IArmorMaterial {
 
-	DIAMOND_SLIPPER(MomWeapons.MOD_ID+":diamond_slipper",11,new int[] { 1, 3, 3, 1 },18, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2, () -> { return Ingredient.fromItems(Items.DIAMOND.get()); },0);
-	DIAMOND_SLIPPERS(MomWeapons.MOD_ID+":diamond_slippers",11,new int[] { 1, 3, 3, 1 },18, SoundEvents.ITEM_ARMOR_EQUIP_GENERIC, 2, () -> { return Ingredient.fromItems(Items.DIAMOND.get()); },0);
+	LEATHER_SLIPPER(MomWeapons.MOD_ID+":leather_slipper",11,new int[] { 1, 3, 3, 1 },18, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 2, () -> { return Ingredient.fromItems(Items.LEATHER); },0),
+	LEATHER_SLIPPERS(MomWeapons.MOD_ID+":leather_slippers",11,new int[] { 1, 3, 3, 1 },18, SoundEvents.ITEM_ARMOR_EQUIP_LEATHER, 2, () -> { return Ingredient.fromItems(Items.LEATHER); },0),
+
+	CHAINMAIL_SLIPPER(MomWeapons.MOD_ID+":chainmail_slipper",11,new int[] { 1, 3, 3, 1 },18, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 2, () -> { return Ingredient.fromItems(Items.CHAIN); },0),
+	CHAINMAIL_SLIPPERS(MomWeapons.MOD_ID+":chainmail_slippers",11,new int[] { 1, 3, 3, 1 },18, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 2, () -> { return Ingredient.fromItems(Items.CHAIN); },0),
+
+	IRON_SLIPPER(MomWeapons.MOD_ID+":iron_slipper",11,new int[] { 1, 3, 3, 1 },18, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2, () -> { return Ingredient.fromItems(Items.IRON_INGOT); },0),
+	IRON_SLIPPERS(MomWeapons.MOD_ID+":iron_slippers",11,new int[] { 1, 3, 3, 1 },18, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 2, () -> { return Ingredient.fromItems(Items.IRON_INGOT); },0),
+
+	GOLD_SLIPPER(MomWeapons.MOD_ID+":gold_slipper",11,new int[] { 1, 3, 3, 1 },18, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 2, () -> { return Ingredient.fromItems(Items.GOLD_INGOT); },0),
+	GOLD_SLIPPERS(MomWeapons.MOD_ID+":gold_slippers",11,new int[] { 1, 3, 3, 1 },18, SoundEvents.ITEM_ARMOR_EQUIP_GOLD, 2, () -> { return Ingredient.fromItems(Items.GOLD_INGOT); },0),
+	
+	DIAMOND_SLIPPER(MomWeapons.MOD_ID+":diamond_slipper",11,new int[] { 1, 3, 3, 1 },18, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2, () -> { return Ingredient.fromItems(Items.DIAMOND); },0),
+	DIAMOND_SLIPPERS(MomWeapons.MOD_ID+":diamond_slippers",11,new int[] { 1, 3, 3, 1 },18, SoundEvents.ITEM_ARMOR_EQUIP_DIAMOND, 2, () -> { return Ingredient.fromItems(Items.DIAMOND); },0),
+
+	NETHERITE_SLIPPER(MomWeapons.MOD_ID+":netherite_slipper",11,new int[] { 1, 3, 3, 1 },18, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 2, () -> { return Ingredient.fromItems(Items.NETHERITE_INGOT); },0.1f),
+	NETHERITE_SLIPPERS(MomWeapons.MOD_ID+":netherite_slippers",11,new int[] { 1, 3, 3, 1 },18, SoundEvents.ITEM_ARMOR_EQUIP_NETHERITE, 2, () -> { return Ingredient.fromItems(Items.NETHERITE_INGOT); },0.1f);
 	
 	private static final int[] MAX_DAMAGE_ARRAY = new int[] { 11, 16, 15, 13 };
     private final String name;
