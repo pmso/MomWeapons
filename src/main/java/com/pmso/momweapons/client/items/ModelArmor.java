@@ -13,14 +13,59 @@ import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ArmorStandEntity;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.util.ResourceLocation;
 
-public class ModelArmor extends BipedModel<LivingEntity> {
+public abstract class ModelArmor extends BipedModel<LivingEntity> {
+	protected final ModelRenderer armorHead;
+    protected final ModelRenderer armorBody;
+    protected final ModelRenderer armorRightArm;
+    protected final ModelRenderer armorLeftArm;
+    protected final ModelRenderer armorRightLeg;
+    protected final ModelRenderer armorLeftLeg;
+    protected final ModelRenderer armorRightBoot;
+    protected final ModelRenderer armorLeftBoot;
 	protected final EquipmentSlotType slot;
+    private String texture;
 
-	public ModelArmor(EquipmentSlotType slot) {
+	public ModelArmor(ResourceLocation texture) {
 		super(1/*modelSize*/);
 		this.slot = slot;
+		this.texture = texture.toString();
 	}
+	
+    public BipedModel applySlot(EquipmentSlotType slot){
+        armorHead.showModel = false;
+        armorBody.showModel = false;
+        armorRightArm.showModel = false;
+        armorLeftArm.showModel = false;
+        armorRightLeg.showModel = false;
+        armorLeftLeg.showModel = false;
+        armorRightBoot.showModel = false;
+        armorLeftBoot.showModel = false;
+
+        switch(slot){
+            case HEAD:
+                armorHead.showModel = true;
+                break;
+            case CHEST:
+                armorBody.showModel = true;
+                armorRightArm.showModel = true;
+                armorLeftArm.showModel = true;
+                break;
+            case LEGS:
+                armorRightLeg.showModel = true;
+                armorLeftLeg.showModel = true;
+                break;
+            case FEET:
+                armorRightBoot.showModel = true;
+                armorLeftBoot.showModel = true;
+                break;
+            default:
+                break;
+        }
+
+        return this;
+    }
 
 	// [VanillaCopy] ArmorStandArmorModel.setRotationAngles because armor stands are dumb
 	// This fixes the armor "breathing" and helmets always facing south on armor stands
